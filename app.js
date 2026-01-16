@@ -55,6 +55,25 @@ app.delete("/api/notes/:id", (req, res) => {
   res.status(204).end();
 });
 
+app.post("/api/notes", (req, res) => {
+  const body = req.body;
+
+  if (!body.content) {
+    return res.status(400).json({
+      error: "content missing",
+    });
+  }
+
+  const note = {
+    content: body.content,
+    important: body.important || false,
+  };
+
+  notes = notes.concat(note);
+
+  res.json(note);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
